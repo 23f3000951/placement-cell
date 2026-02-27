@@ -184,7 +184,6 @@ def student_history(user_id):
         return "Student not found", 404
     return render_template("Student_history.html", student=this_student)
 
-
 @app.route("/student/company_view/<int:user_id>/<int:company_id>")
 def student_company_view(user_id, company_id):
     this_student = Student.query.filter_by(user_id=user_id).first()
@@ -192,7 +191,6 @@ def student_company_view(user_id, company_id):
     if not this_company or not this_student:
         return "Data not found", 404
     return render_template("Stud_comp.html", company=this_company, student=this_student)
-
 
 @app.route("/drive/view/<int:user_id>/<int:drive_id>")
 def view_drive_details(user_id, drive_id):
