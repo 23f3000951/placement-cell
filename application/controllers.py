@@ -73,7 +73,6 @@ def admin_dashboard():
     ongoing_drives = Drive.query.filter_by(status="Ongoing").all()
     return render_template("Admin_Dashboard.html", admin=admin, companies=companies, students=students, pending_companies=pending_companies, student_apps=student_apps, ongoing_drives=ongoing_drives)
 
-
 @app.route("/admin/action/<string:action>/<int:user_id>", methods=["GET","POST"])
 def admin_action(action, user_id):
     user = User.query.get(user_id)
@@ -86,7 +85,6 @@ def admin_action(action, user_id):
     db.session.commit()
     return redirect("/Admin")
 
-
 @app.route("/company_dashboard/<int:user_id>")
 def company_dashboard(user_id):
     this_company = Company.query.filter_by(user_id=user_id).first()
@@ -96,7 +94,6 @@ def company_dashboard(user_id):
     closed_drives = Drive.query.filter_by(company_id=this_company.id, status='Closed').all()
     return render_template("company_Dashboard.html", company=this_company, upcoming_drives=upcoming_drives, closed_drives=closed_drives)
 
-
 @app.route("/drive/details/<int:drive_id>")
 def drive_details(drive_id):
     drive = Drive.query.get(drive_id)
@@ -104,7 +101,6 @@ def drive_details(drive_id):
         return "Drive record not found!", 404
     applications = Application.query.filter_by(drive_id=drive_id).all()
     return render_template("Com_see_app.html", drive=drive, applications=applications)
-
 
 @app.route("/drive/close/<int:drive_id>")
 def close_drive(drive_id):
@@ -114,7 +110,6 @@ def close_drive(drive_id):
         db.session.commit() 
         return redirect(f"/company_dashboard/{drive.company.user_id}")
     return "Drive not found", 404
-
 
 @app.route("/student/application/review/<int:app_id>", methods=["GET", "POST"])
 def review_application(app_id):
@@ -128,7 +123,6 @@ def review_application(app_id):
             db.session.commit()
             return redirect(f"/drive/details/{application.drive_id}")
     return render_template("Com_stu_app.html", app=application)
-
 
 @app.route("/company/<int:company_id>/create_drive", methods=["GET", "POST"])
 def create_drive(company_id):
@@ -151,14 +145,12 @@ def create_drive(company_id):
         return redirect(f"/company_dashboard/{this_company.user_id}")
     return render_template("create_drive.html", company_id=company_id)
 
-
 @app.route("/admin/application/view/<int:app_id>")
 def view_student_app(app_id):
     application = Application.query.get(app_id)
     if not application:
         return "Application not found", 404
     return render_template("Adm_stu_app.html", app=application)
-
 
 @app.route("/admin/view_drive/<int:drive_id>")
 def view_comp_drive(drive_id):
@@ -167,7 +159,6 @@ def view_comp_drive(drive_id):
         return "Drive record not found!", 404
     return render_template("Adm_com_drive.html", drive=drive)
 
-
 @app.route("/student_dashboard/<int:user_id>")
 def student_dashboard(user_id):
     this_student = Student.query.filter_by(user_id=user_id).first()
@@ -175,7 +166,6 @@ def student_dashboard(user_id):
         return "Student profile not found", 404
     all_companies = Company.query.join(User).filter(User.is_approved == True).all()
     return render_template("Student_dashboard.html", student=this_student, companies=all_companies)
-
 
 @app.route("/student_history/<int:user_id>")
 def student_history(user_id):
