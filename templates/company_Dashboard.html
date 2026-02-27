@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Company Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<style>
+    #canvas{
+        height:600px;
+    }
+</style>
+<body>
+    <div id="main">
+        <div id="canvas">
+           <nav class="navbar navbar-light bg-light border p-2 d-flex justify-content-between">
+                <span class="navbar-brand mb-0 h5">Welcome {{ company.name }}</span>
+                <form class="d-flex align-items-center gap-2">
+                    <a class="btn btn-outline-primary rounded px-3" href="/company/{{ company.id }}/create_drive">Create Drive</a>
+                    <a class="btn btn-outline-primary rounded px-3" href="/login">Log out</a>
+                </form>
+            </nav>
+            <div id="content">
+                <h3 class="headings">Ongoing Drives</h3>
+                <div id="table">
+                    <table class="table table-bordered text-center align-middle" >
+                        <thead>
+                            <tr>
+                                <th style="width:80px" !important>Sr No.</th>
+                                <th>Drive Name</th>
+                                <th style="width:42%">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for drive in upcoming_drives %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ drive.drive_name }}</td>
+                                <td>
+                                    <a class="btn btn-primary" href="/drive/details/{{ drive.id }}">View Details</a>
+                                    <a class="btn btn-danger" href="/drive/close/{{ drive.id }}">Close Drive</a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center">No Ongoing Drive.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <h3 class="headings">Closed Drives</h3>
+                <div id="table">
+                    <table class="table table-bordered" >
+                        <thead>
+                            <tr>                                
+                                <th class="text-center">Sr No.</th>
+                                <th class="text-center">Drive Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for drive in closed_drives %}
+                            <tr>
+                                <td class="text-center align-middle">{{ loop.index }}</td>
+                                <td class="text-center align-middle">{{ drive.drive_name }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="2" class="text-center">No drive in closed yet.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Drive</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        #canvas{
+            height:600px;
+            margin:auto;
+            margin-top:20px;
+            margin-bottom:20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div id="canvas">
+            <h1 class="text-center">{{ drive.drive_name }}</h1>
+            <form action="/drive/apply/{{ student.id }}/{{ drive.id }}" method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Job Title</label>
+                    <input class="form-control" type="text" value="{{ drive.job_title }}" disabled readonly>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Job Description</label>
+                    <textarea class="form-control" rows="3" disabled readonly>{{ drive.job_description }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Salary</label>
+                    <input class="form-control" type="text" value="{{ drive.salary }}" disabled readonly>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Location</label>
+                    <input class="form-control" type="text" value="{{ drive.location }}" disabled readonly>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Apply Now</button>
+                    <a class="btn btn-primary" href="/student/company_view/{{ student.user_id }}/{{ drive.company_id }}" role="button">Go Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

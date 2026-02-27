@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Company Student Application</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+        #canvas{
+            height:600px;
+            margin:auto;
+            margin-top:20px;
+            margin-bottom:20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div id="canvas">
+            <h1 class="text-center">Student Application</h1>
+            <form action="/student/application/review/{{ app.id }}" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Student Name</label>
+                    <input class="form-control" type="text" value="{{ app.student.name }}" disabled readonly>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Department</label>
+                    <input class="form-control" type="text" value="{{ app.student.department }}" disabled readonly>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Drive</label>
+                    <input class="form-control" type="text" value="{{ app.drive.drive_name }}" disabled readonly>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Job Title</label>
+                    <input class="form-control" type="text" value="{{ app.drive.job_title }}" disabled readonly>
+                </div>
+                <div class="text-center">
+                    <select name="status" style="width:200px" class="form-select mb-3 d-inline-block">
+                        <option value="" disabled selected>Select Status</option>
+                        <option value="Shortlisted">Shortlist</option>
+                        <option value="Waiting">Waiting</option>
+                        <option value="Rejected">Reject</option>
+                    </select>
+                    <input type="submit" class="btn btn-primary" value="Save Info">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

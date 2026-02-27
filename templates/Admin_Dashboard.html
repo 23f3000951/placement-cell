@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<style>
+    #canvas{
+        height:auto;
+    }
+    #main{
+        height:auto;
+    }
+</style>
+<body>
+    <div id="main">
+        <div id="canvas">
+           <nav class="navbar navbar-light bg-light border p-2 d-flex justify-content-between">
+                <span class="navbar-brand mb-0 h5">Welcome {{ admin.username }}</span>
+                <form class="d-flex align-items-center gap-2" action="/search">
+                    <input class="form-control rounded-pill border-primary bg-light" type="search" name="search" placeholder="student, company" style="width: 200px;">
+                    <select name="key" class="form-select rounded-pill" style="width: 130px;">
+                        <option value="student">Student</option>
+                        <option value="company">Company</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </nav> 
+            <div id="content">
+                <h3 class="headings">Registered Companies</h3>
+                <div id="table">
+                    <table class="table table-bordered" >
+                        <thead>
+                            <tr>
+                                <th>Company Name</th>
+                                <th style="width:20%" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for company in companies %}
+                            <tr>
+                                <td>{{ company.name }}</td>
+                                <td class="text-center align-middle">
+                                    <form action="/admin/action/delete/{{ company.user_id }}" method="POST">
+                                        <button type="submit" class="btn btn-danger">Block</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="2" class="text-center">No company registered yet.</td>
+                            </tr>                              
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <h3 class="headings">Registered Students</h3>
+                <div id="table">
+                    <table class="table table-bordered" >
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th style="width:20%" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                            <tr>
+                                <td>{{ student.name }}</td>
+                                <td class="text-center align-middle">
+                                    <form action="/admin/action/delete/{{ student.user_id }}" method="POST">
+                                        <button type="submit" class="btn btn-danger">Block</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="2" class="text-center">No student registered yet.</td>
+                            </tr>                               
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <h3 class="headings">Company Applications</h3>
+                <div id="table">
+                    <table class="table table-bordered" >
+                        <thead>
+                            <tr>
+                                <th>Company Name</th>
+                                <th style="width:20%" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for comp in pending_companies %}
+                            <tr>
+                                <td>{{ comp.name }}</td>
+                                <td class="text-center align-middle">
+                                    <form action="/admin/action/approve/{{ comp.user_id }}" method="POST">
+                                        <button type="submit" class="btn btn-success">Accept</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="2" class="text-center">No company application yet.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <h3 class="headings">Student Applications</h3>
+                <div id="table">
+                    <table class="table table-bordered text-center align-middle" >
+                        <thead>
+                            <tr>
+                                <th>Sr No.</th>
+                                <th>Name</th>
+                                <th>Drive</th>
+                                <th>Company</th>
+                                <th style="width:20%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for app in student_apps %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ app.student.name }}</td>
+                                <td>{{ app.drive.drive_name }}</td>
+                                <td>{{ app.drive.company.name }}</td>
+                                <td ><a href="/admin/application/view/{{ app.id }}" class="btn btn-primary">View</a></td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">No student have been applied in any company yet.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <h3 class="headings">Ongoing Drives</h3>
+                <div id="table">
+                    <table class="table table-bordered text-center align-middle" >
+                        <thead>
+                            <tr>
+                                <th style="width:80px" !important>Sr No.</th>
+                                <th>Drive Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for drive in ongoing_drives %}
+                            <tr>
+                                <td>{{ drive.id }}</td>
+                                <td>{{ drive.drive_name }}</td>
+                                <td ><a href="/admin/view_drive/{{ drive.id }}" class="btn btn-primary">View</a></td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center">Any company have opened any drive yet.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
