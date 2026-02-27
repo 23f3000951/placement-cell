@@ -57,4 +57,4 @@ class Application(db.Model):
 #1. from database import db --> models.py will look this file in root directory.
 #2. from .database import db --> models.py will look this file in current directory(applications folder).
 #3. from application.database import db --> models.py will look for this file in application directory 
-#   within the application folder itself.
+#   within the application folder itself...
